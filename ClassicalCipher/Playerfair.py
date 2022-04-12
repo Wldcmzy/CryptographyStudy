@@ -8,6 +8,7 @@ class Palyfair:
         self.__paddingTail = paddingTail.lower()
     
     #构造字母矩阵,该方法一般不直接调用而是当密钥改变时,在方法setKey(self, key)中调用
+    #字母矩阵构造方式为由左至右边,由上至下,优先填充一行
     def __makeMatrix(self):
         matrix = numpy.zeros([5, 5], dtype = str)
         lstKey = ''
@@ -56,7 +57,6 @@ class Palyfair:
     def encrypt(self, plaintext):
         plaintext = ''.join(filter(str.isalpha, plaintext)).lower()
         if (len(plaintext) & 1) == 1: plaintext += self.__paddingTail
-        print(plaintext)
         ciphertext, idx = '', 0
         while idx < len(plaintext):
             a, b = plaintext[idx], plaintext[idx + 1]
@@ -115,3 +115,17 @@ class Palyfair:
 
         __dfs(0)
         return answer
+
+def test():
+    a = Palyfair()
+    a.setKey('PlayFAiR iS a DIgRAM CIphEr')
+    t = a.encrypt('playfair cipher abc')
+    print(t)
+    print(a.decrypt(t))
+
+    t = a.encrypt('playfair cipher aaabaaa')
+    print(t)
+    print(a.decrypt(t, True))
+
+if __name__ == '__main__':
+    test()
