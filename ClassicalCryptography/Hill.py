@@ -1,3 +1,6 @@
+## 小数取模乘法会导致错误, 必须选取逆矩阵也全为整数的矩阵为key
+## 暂不解决
+
 import numpy
 class Error_NotASquareMatrix_Of_Hill(Exception):
     pass
