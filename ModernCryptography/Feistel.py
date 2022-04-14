@@ -4,6 +4,7 @@ import sys
 class Error_IllegalNumber_Of_Feistel(Exception):
     pass
 class Feistel:
+    # 本加密算法没有用到SP盒,对每一分组单独使用Feistel
     ErrorString_groupLengthIsOddNumber = '分组长度为奇数'
     ErrorString_CipertextLengthNotMultipleOfGrouplenght = '密文长度不合法,不是groupLength的倍数'
     ModBitAdd1, ModNumber1, ModNumber2 = 257, 1e9 + 7, 998244353
