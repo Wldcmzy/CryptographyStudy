@@ -15,7 +15,7 @@ class Feistel:
         self.__loopTimes = abs(loopTimes)
         self.__keys = self.__generateKey()
 
-
+    #瞎编了一种密钥构造的方法, 利用seed斐波那契不断延长密钥直到打到要求, 继续利用seed和斐波那契构造每一轮的密钥
     def __generateKey(self):
         a, b, temp_key = 1, 1, ''
         while len(temp_key) < (self.__groupLength >> 1):
@@ -68,17 +68,12 @@ class Feistel:
         for each in lst: re += __F(each)
         return re
         
-
-
-
     def encrypt(self, plaintext):
         if len(plaintext) % self.__groupLength != 0:
             cnt, tmp = self.__groupLength - (len(plaintext) % self.__groupLength), ''
             while len(tmp) < cnt: tmp += plaintext[ : cnt << 2 : 2]
             plaintext += tmp[ : cnt]
         return self.__work(plaintext, 'P2C')
-
-
 
     def decrypt(self, cipertext):
         if len(cipertext) % self.__groupLength != 0:
@@ -88,9 +83,8 @@ class Feistel:
 def test(plain):
     print('plain:',plain)
     print('\n\n')
-
-
-    a = Feistel()
+    a = Feistel('1437')
+    a.setGroupLength(32)
     t = a.encrypt(plain)
     print('密文:',t, end = '\n\n\n')
     print('解密:',a.decrypt(t))
@@ -99,6 +93,8 @@ if __name__ == '__main__':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding = 'utf-8') #改变标准输出的默认编码
     a1 = 'long long ago a bird ate a snake and say:\" LONG LONG AGO A SNAKE ATE A BIRD AND SAY \' WTF? I just wanna play Hollow Knight: Silk Song ! But ! I CAN\'T !! When can i play it !? I\'ll go mad!!!!!!!!!\' \"'
     a2 = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'
+    a3 = 'abcdefghijkxmnopzrstuvwxyz1234567890!@#$%^&*()'
     test(a1)
     test(a2)
+    test(a3)
 
