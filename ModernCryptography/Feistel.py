@@ -1,10 +1,11 @@
-import io
-import sys
+# 本仅对每一分组单独使用Feistel
+# 未使用SP盒, 轮函数使用简单的异或运算
+# 也就是说本算法没有错误传播,无雪崩效应
 
 class Error_IllegalNumber_Of_Feistel(Exception):
     pass
 class Feistel:
-    # 本加密算法没有用到SP盒,对每一分组单独使用Feistel
+    
     ErrorString_groupLengthIsOddNumber = '分组长度为奇数'
     ErrorString_CipertextLengthNotMultipleOfGrouplenght = '密文长度不合法,不是groupLength的倍数'
     ModBitAdd1, ModNumber1, ModNumber2 = 257, 1e9 + 7, 998244353
@@ -91,6 +92,8 @@ def test(plain):
     print('解密:',a.decrypt(t))
 
 if __name__ == '__main__':
+    import io
+    import sys
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding = 'utf-8') #改变标准输出的默认编码
     a1 = 'long long ago a bird ate a snake and say:\" LONG LONG AGO A SNAKE ATE A BIRD AND SAY \' WTF? I just wanna play Hollow Knight: Silk Song ! But ! I CAN\'T !! When can i play it !? I\'ll go mad!!!!!!!!!\' \"'
     a2 = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()'
