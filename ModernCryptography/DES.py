@@ -115,7 +115,7 @@ class DES:
 
 	def __init__(self, key = 0xabcdef0123456789):
 		self.__loopTimes = 16
-		self.__keys = self.setKey(key)
+		self.setKey(key)
 
 	# 把数据origin通过映射表prjmap做变换
 	def __Project(self, origin, prjmap, originLen):
@@ -152,7 +152,7 @@ class DES:
 			key = keyint
 		if key >> 64 != 0:
 			raise KeyError_Of_DES(DES.ErrorString_KeyInputIsNot64bits)
-		return self.__GenerateKey(key)
+		self.__keys = self.__GenerateKey(key)
 
 	# 轮函数
 	def __F(self, data32, key):
@@ -292,8 +292,32 @@ def test2():
 	print('P :', tt)
 
 	# error, because of length(key) > 64bit 
-	a.setKey('asdfqwerzx')
+	#a.setKey('asdfqwerzx')
 
+def test3():
+	a = DES()
+	a.setKey(0xabcdef1234567890)
+
+	print(1)
+	t = a.encrypt('asdfjklw')
+	print(t)
+	print(a.decrypt(t))
+
+	print('--')
+	t = a.encrypt('asdfj3lw')
+	print(t)
+	print(a.decrypt(t))
+
+	print(2)
+	t = a.encrypt('asdfjklw')
+	print(t)
+	print(a.decrypt(t))
+
+	print('--')
+	a.setKey(0xabcdef1234567880)
+	t = a.encrypt('asdfjklw')
+	print(t)
+	print(a.decrypt(t))
 
 if __name__ == '__main__':
 	import sys
@@ -301,3 +325,4 @@ if __name__ == '__main__':
 	sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding = 'utf-8') #改变标准输出的默认编码
 	test()
 	test2()
+	test3()
