@@ -113,7 +113,7 @@ class DES:
 
 	__keyShift = [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1]
 
-	def __init__(self, key):
+	def __init__(self, key = 0xabcdef0123456789):
 		self.__loopTimes = 16
 		self.__keys = self.setKey(key)
 
@@ -282,13 +282,17 @@ def test():
 	print()
 
 def test2():
-	a = DES(0xabcdef1234567890)
+	a = DES()
+	a.setKey(0xabcdef1234567890)
 	ori = 'DE135AD1ABCDS'
 	print('origintext: ', ori)
 	t = a.encrypt(ori)
 	print('C :', t)
 	tt = a.decrypt(t)
 	print('P :', tt)
+
+	# error, because of length(key) > 64bit 
+	a.setKey('asdfqwerzx')
 
 
 if __name__ == '__main__':
