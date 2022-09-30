@@ -1,8 +1,17 @@
 from tkinter.filedialog import askopenfilename, askdirectory
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
-from tkinter import *
-import os
+from os.path import dirname
+from os import system
+from tkinter import (
+    Tk, 
+    StringVar,
+    Toplevel,
+    Message,
+    Label,
+    Entry,
+    Button,
+)
 
 READ_SIZE = (1 << 27) # 128MB
 
@@ -125,11 +134,11 @@ def selectOutPath():
 
 
 def openPath():
-    dir = os.path.dirname(path.get().strip()+"\\")
-    os.system('start ' + dir)
+    dir = dirname(path.get().strip()+"\\")
+    system('start ' + dir)
 def openOutPath():
-    dir = os.path.dirname(outpath.get().strip()+"\\")
-    os.system('start ' + dir)
+    dir = dirname(outpath.get().strip()+"\\")
+    system('start ' + dir)
 
 
 Label(root, text="文件路径:").grid(row=0, column=0)

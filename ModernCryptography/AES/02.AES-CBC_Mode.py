@@ -14,6 +14,7 @@ cipher = AES.new(key, AES.MODE_CBC) # iv 自动生成
 ciphertext = cipher.encrypt(origintext)
 # iv = b64encode(cipher.iv).decode('utf-8')
 # 解密需要一个新的AES对象
+
 cipher2 = AES.new(key, AES.MODE_CBC, cipher.iv) # 需要填入对应的iv
 plaintext = cipher2.decrypt(ciphertext)
 plaintext = unpad(plaintext, AES.block_size, style='pkcs7')
